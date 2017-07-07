@@ -70,6 +70,9 @@ header nav{
   margin-top:10px;
   display: block;
 }
+audio {
+    
+}
 
 header .highlight, header .current a{
   color: lightgreen;
