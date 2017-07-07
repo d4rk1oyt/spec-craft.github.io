@@ -5,6 +5,10 @@ body{
   background-color: white;
 }
 
+title {
+    background-image: url("../img/profilepick.png");
+}
+
 /* Global */
 .container{
   width:80%;
