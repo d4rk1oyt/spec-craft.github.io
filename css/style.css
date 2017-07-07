@@ -2,7 +2,7 @@ body{
   font: 15px/1.5 inherit;
   padding:0;
   margin:0;
-  background-color: azure;
+  background-color: white;
 }
 
 /* Global */
@@ -19,7 +19,7 @@ ul{
 
 .button_1{
   height:38px;
-  background: green;
+  background: lightgreen;
   border:0;
   padding-left: 20px;
   padding-right:20px;
@@ -38,15 +38,16 @@ ul{
 header{
   background:#35424a;
   color:#ffffff;
-  padding-top:30px;
-  min-height:70px;
-  border-bottom:green 3px solid;
+  padding-top:10px;
+  padding-bottom: 10px;
+  min-height:50px;
+  border-bottom: lightgreen 3px solid;
 }
 
 header a{
   color:#ffffff;
   text-decoration:none;
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size:16px;
 }
 
@@ -70,12 +71,12 @@ header nav{
 }
 
 header .highlight, header .current a{
-  color: green;
+  color: lightgreen;
   font-weight:bold;
 }
 
 header a:hover{
-  color: chartreuse;
+  color: lightgreen;
   font-weight:bold;
 }
 
@@ -83,7 +84,7 @@ header a:hover{
 #showcase{
   min-height:400px;
   text-align:center;
-  color:chartreuse;
+  color: darkslategray;
 }
 
 #showcase h1{
@@ -121,14 +122,14 @@ header a:hover{
 /* Boxes */
 #boxes{
   margin-top:20px;
-    background-color: white;
+  background-color: white;
 }
 
 #boxes .box{
   float:left;
   text-align: center;
   width:30%;
-  padding:10px;
+  padding:15px;
 }
 
 #boxes .box img{
@@ -166,7 +167,7 @@ footer{
   padding:20px;
   margin-top:20px;
   color:#ffffff;
-  background-color:green;
+  background-color:lightgreen;
   text-align: center;
 }
 
