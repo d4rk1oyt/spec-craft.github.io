@@ -1,0 +1,15 @@
+{
+  "name": "SimpleChat",
+  "version": "0.0.1",
+  "description": "SimpleChat App Web",
+  "main": "chat.js",
+  "scripts": {
+    "start": "node chat.js"
+  },
+  "author": "d4rk1o_dev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  }
+}

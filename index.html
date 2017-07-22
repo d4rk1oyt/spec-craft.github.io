@@ -1,69 +1,90 @@
-<!DOCTYPE html5>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Great Server communtiy">
-	  <meta name="keywords" content="empowering players to have fun.">
-  	<meta name="author" content="d4rk1o_dev">
-      <link rel="icon" href="./img/profilepick.png" />
-    <title>Spec-Craft | Welcome</title>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-    <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '55ba26c3-fe60-4fad-a52a-ea6463e3bc9f', f: true }); done = true; } }; })();</script>
-  <body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1><span class="highlight">Spec-Craft</span> Network</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li class="current"><a href="index.html">Home</a></li>
-                    <li><a href="info.html">Info</a> </li>
-                    <li><a href="app.html">App</a></li>
-                    <li><a href="https://app.purechat.com/w/Spec-Craft | Live Chat">LiveChat</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {}
+        .roomsContainer {
+            float:left;
+            width:100px;
+            border-right:1px solid black;
+            height:300px;
+            padding:10px;
+            overflow:scroll-y;
+        }
+        .conversationContainer {
+            float:left;
+            width:300px;
+            height:250px;
+            overflow:scroll-y;
+            padding:10px;
+        }
+        #data {
+        }
+    </style>
+    <title>SimpleChat || Rooms</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>
+        //Will be adding CHATROOM LOGIC HERE
+        //We have Server Side funtions, now we need to add client side functions
+        var socket = io.connect('http://197.88.44.41:3000');
+        socket.on('connect', function() {
+            socket.emit('addUser', prompt("What's your name"));
+        });
+        socket.on('updateChat', function(username, data) {
+            $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+        });
+        socket.on('updateRooms', function(rooms, currentRoom) {
+            $('#rooms').empty();
+            $.each(rooms, function(key, value) {
+                if(value === currentRoom) {
+                    $('#rooms').append('<div>'
+                    + value
+                    + '</div>');
+                }else {
+                    $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+ value + '\')">'
+                     + value
+                     + '</a></div>');
+                }
+            });
+        });
+        function switchRoom(room) {
+            socket.emit('switchRoom', room);
+        }
+        //when the page loads we need to do a few things
+        $(function() {
+            //get sent data on click
+            $('#datasend').click( function() {
+                var message = $('#data').val();
+                //clear the input box
+                $('#data').val('');
+                $('#data').focus();
+                //send it to the server
+                socket.emit('sendChat', message);
+            });
+            //allow the client to use enter key
+            $('#data').keypress(function(e) {
+                if(e.which == 13) {
+                    $(this).blur();
+                    //select the send box
+                    $('#datasend').focus().click();
+                    //Select the input box
+                    $('#data').focus();
+                }
+            });
+        });
+    </script>
 
-    <section id="showcase">
-      <div class="container">
-        <h1>Welcome to Spec-Craft!</h1>
-        <p>Spec-Craft welcomes you to our official website and awesome community. On our website you will find everything you need to know about us. Join today with... spec-craft.ddns.net</p>
-      </div>
-    </section>
-
-    <section id="newsletter">
-      <div class="container">
-        <h1>Subscribe To Get All Our News</h1>
-        <form>
-          <input type="email" placeholder="Your Email..">
-          <button type="submit" class="button_1">Subscribe</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="boxes">
-      <div class="container">
-        <div class="box">
-          <h3>Awesome Community</h3>
-          <p>Spec-Craft's Community is built around awesome people, and welcomes other people to be apart of it.</p>
-        </div>
-        <div class="box">
-          <h3>24/7 Support</h3>
-          <p>Our Forum Support team is always there to help you, 24/7</p>
-        </div>
-        <div class="box">
-          <h3>Friendly Staff</h3>
-          <p>We have staff that are always friendly and willing to help you when in need.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <p>Spec-Craft, Copyright &copy; 2017. Made by d4rk1o_dev</p>
-    </footer>
-  </body>
+</head>
+<body>
+<div class="roomsContainer">
+	<b>SimpleChat || Rooms</b>
+	<div id="rooms"></div>
+</div>
+<div class="conversationContainer">
+	<div id="conversation"></div>
+	<input id="data" style="width:200px;" />
+	<input type="button" id="datasend" value="send" />
+</div>
+</body>
 </html>
